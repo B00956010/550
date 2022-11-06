@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Project  3</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script type="text/javascript"
+          src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js">
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github.min.css">
+    <link href="../../assets/styles/article.css" rel="stylesheet" type="text/css" /> 
+</head>
+
+<body class=umt-article>
+    <nav id="course-nav">
+      <ul>
+      </ul>
+    </nav>
+
+    <div class="umt-content">
+      <div><section data-level="h1"><h1>Project  3</h1><p><strong>Due</strong>: Oct 28, before midnight.
+</p><p><strong>Important Reminder</strong>: As per the course  <a href="../../misc/academic-honesty/academic-honesty-policy.html">Academic Honesty Statement</a>,
+cheating of any kind will minimally result in your letter grade
+for the entire course being reduced by one level.
+</p><p>This document first provides the aims of this project.  It then lists
+the requirements as explicitly as possible.  It then hints at how
+these requirements can be met.  Finally, it describes how it can be
+submitted.
+</p><section data-level="h2"><h2>Aims</h2><p>The aims of this project are as follows:
+</p><ul><li><p>To give you more exposure to recursive programming.
+</p></li><li><p>To expose you to Prolog programming.
+</p></li></ul></section><section data-level="h2"><h2>Requirements</h2><p>Implement all the procedures specified in 
+<a href="prj3-sol/prj3-sol.pro">prj3-sol.pro</a> using swipl Prolog.  You may define auxiliary procedures
+as needed.
+</p><p>An example  <a href="extras/LOG">LOG</a> file gives examples of the use of these
+procedures as do the tests provided in 
+<a href="prj3-sol/prj3-sol.pro">prj3-sol.pro.</a>
+</p><p>You are not allowed to use any non-logical features of Prolog other
+than <code>is/2</code>.  Non-logical features include the explicit cut <code>!</code>, 
+implicit cut within <code>-></code>, <code>assert</code>, <code>retract</code>, <code>record</code>, etc.
+</p></section><section data-level="h2"><h2>Provided Files</h2><p>You should use the provided  <a href="prj3-sol">prj3-sol</a> directory as a
+starting point for your project by copying it into your <code>i571?/submit</code>
+directory.  It contains the following files:
+</p><dl><dt>  <a href="prj3-sol/prj3-sol.pro">prj3-sol.pro</a> </dt><dd><p>    A skeleton file which contains the specifications for the
+    procedures you are required to write as well as tests
+    for those procedures.
+</p></dd><dt>  <a href="./prj3-sol/README">README</a></dt><dd><p>    A README file which must be submitted along with your project.  It
+    contains an initial header which you must complete (replace the
+    dummy entries with your name, B-number and email address at which
+    you would like to receive project-related email).  After the
+    header you may include any content which you would like read
+    during the grading of your project.
+</p></dd></dl><p>The  <a href="extras">extras</a> directory contains the following files:
+</p><dl><dt>  <a href="extras/LOG">LOG</a> </dt><dd><p>    A sample log file.
+</p></dd><dt>  <a href="extras/do-tests.sh">do-tests.sh</a> </dt><dd><p>    A trivial shell script to allow running tests from the command line.
+</p></dd></dl></section><section data-level="h2"><h2>Tests</h2><p>The  <a href="prj3-sol/prj3-sol.pro">prj3-sol.pro</a> skeleton file contains
+
+    <a href="https://www.swi-prolog.org/pldoc/doc_for?object=section(%27packages/plunit.html%27)">unit tests</a> for the procedures you are required to implement.
+Note that specifying a test as <code>nondet</code> means that the test may
+succeed with more possible answers pending.  The <code>all</code> specification
+specifies a list of all possible answers after backtracking through
+the test.
+</p><p>You can run the tests using Prolog's <code>run_tests/0</code> or <code>run_tests/1</code>.
+</p><pre class="hljs language-pro">    $ prolog
+    ...
+
+    % load required solution file
+    1 ?- ['prj3-sol.pro'].
+    true.
+
+    % run tests for a single procedure
+    ?- run_tests(re_match).
+    % PL-Unit: re_match ....................... done
+    % All 23 tests passed
+    true.
+
+    % run all tests
+    ?- run_tests.
+    % PL-Unit: dept_employees ... done
+    % PL-Unit: employees_salary_sum ... done
+    % PL-Unit: list_access ............ done
+    % PL-Unit: count_non_pairs ....... done
+    % PL-Unit: divisible_by .... done
+    % PL-Unit: re_match ....................... done
+    % PL-Unit: clausal_form ..... done
+    % All 57 tests passed
+    true.
+</pre><p>  You can also use the  <a href="extras/do-tests.sh">do-tests.sh</a> shell script
+  to run unit tests from outside prolog:
+</p><pre class="hljs language-sh">    $ prj3=$HOME/cs571/projects/prj3
+    $ $prj3/extras/do-tests.sh
+    usage: do-tests.sh TESTS_FILE [TEST_NAME...]
+</pre><p>    It can be run for testing a single procedure:
+</p><pre class="hljs language-sh">    $ $prj3/extras/do-tests.sh prj3-sol.pro re_match
+    ...
+
+    % PL-Unit: re_match ... done
+    % All 23 tests passed
+    % halt
+</pre><p>    or for testing multiple procedures:
+</p><pre class="hljs language-sh">    $ prj3/extras/do-tests.sh prj3-sol.pro re_match divisible_by
+    ...
+
+    % PL-Unit: re_match ....................... done
+    % PL-Unit: divisible_by .... done
+    % All 27 tests passed
+    % halt	 
+</pre><p>    or for running all tests:
+</p><pre class="hljs language-sh">    $ $prj3/extras/do-tests.sh prj3-sol.pro 
+    ...
+    % PL-Unit: dept_employees ... done
+    % PL-Unit: employees_salary_sum ... done
+    % PL-Unit: list_access ............ done
+    % PL-Unit: count_non_pairs ....... done
+    % PL-Unit: divisible_by .... done
+    % PL-Unit: re_match ....................... done
+    % PL-Unit: clausal_form ..... done
+    % All 57 tests passed
+    % halt
+</pre></section><section data-level="h2"><h2>Hints</h2><p>The following points are worth noting:
+</p><ul><li><p>Review the class  <a href="../../slides/prolog/prolog.html">Prolog
+    slides</a>.  In particular, review the slides on
+     <a href="../../slides/prolog/prolog.html#umt-slide-47">Prolog
+    Programming Heuristics</a>.
+</p></li><li><p>If you do not understand the specs for a procedure, please look at
+    the tests or  <a href="extras/LOG">LOG</a> for examples of the expected use of
+    the procedure.
+</p></li><li><p>Pattern matching of two terms can be done implicitly, or by
+    explicitly using the <code>=</code> operator.  Occasionally, you will need to
+    verify that two terms do not match; this can be done using the
+    <code>\=</code> operator as in <code>X \= Y</code>.
+</p><p>    This will be necessary when your case analysis results in
+    two cases:
+</p><dl><dt> <strong>Terms match</strong> </dt><dd><p>        The matching is usually done implicitly by using
+        the same variable for all occurrences of the terms.
+</p></dd><dt> <strong>Terms do not match</strong> </dt><dd><p>        The terms are accessed as some variables <code>X</code> and <code>Y</code> and then
+	the non-matching is enforced by specifying <code>X \= Y</code>, usually
+	as a guard.
+</p></dd></dl></li><li><p>Since there are no types or declarations in Prolog, it is very
+    easy to have a bug resulting from a typo in a variable name.
+    Prolog tries to prevent this by generating warnings about
+    <strong>singleton variables</strong>; i.e, any variable which occurs only once
+    within a Prolog rule.  For example, the rule
+</p><pre class="hljs language-prolog">    member(X, [Element|Elements]) :-
+      member(X, Elements).
+</pre><p>    would produce a warning that <code>Element</code> is a singleton variable.
+</p><p>    If the singleton variable is intentional, then the warning can be
+    avoided by replacing the name with one starting with an underscore
+    <code>_</code>, as in the code shown below:
+</p><pre class="hljs language-prolog">    member(X, [_Element|Elements]) :-
+      member(X, Elements).
+</pre></li><li><p>Prolog has a pretty powerful
+    
+    <a href="https://www.swi-prolog.org/pldoc/man?section=debugger">debugging model</a>.  You can turn on tracing using
+    <code>trace/0</code> or <code>trace/1</code> and turn it off using <code>nodebug/0</code>, spying on
+    a particular procedure using <code>spy/1</code> and turn off using <code>nospy/1</code>
+    of <code>nospyall</code>.  If running within a
+    graphical environment, you can turn on
+     <a href="https://www.swi-prolog.org/pldoc/man?section=guitracer">GUI
+    debugging</a> using <code>gtrace</code>.
+</p></li></ul><section data-level="h3"><h3>Exercise-Specific Hints</h3><section data-level="h4"><h4>Exercise #1: <code>dept_employees()</code></h4><p>Simply recurse through the list of employees.  Deal with 3 cases:
+</p><ol><li><p>The list of employees is empty.
+</p></li><li><p>The department in the head of the list of employees matches
+    the required department.
+</p></li><li><p>The department in the head of the list of employees does not match
+    the required department.
+</p></li></ol><p>Make sure you set up these 3 cases to be mutually exclusive.
+</p></section><section data-level="h4"><h4>Exercise #2: <code>employees_salary_sum()</code></h4><p>Since the procedure is required to be tail-recursive, use an auxiliary
+procedure with an additional parameter which accumulates the sum.
+</p><ol><li><p>If the original employee list is empty, the final sum should simply
+    match the accumulated sum.
+</p></li><li><p>When the original employee list is non-empty, accumulate the head element
+    salary into the accumulator and recurse on the cdr.
+</p></li></ol><p>Use something like <code>Acc1 is Acc + Salary</code> to accumulate salaries.
+</p></section><section data-level="h4"><h4>Exercise #3: <code>list_access()</code></h4><p>You will need to handle the following cases:
+</p><ol><li><p>The <code>Indexes</code> list is empty.
+</p></li><li><p>The <code>Indexes</code> list is not empty, but the <code>List</code> list is empty.
+</p></li><li><p>Both lists are not empty and the head of the <code>Indexes</code> list is 0.
+    In this case, the code will need to descend into the head of
+    <code>List</code> using the cdr of the <code>Indexes</code>.
+</p></li><li><p>Both lists are not empty and the head <code>Index</code> of the <code>Indexes</code>
+    list is > 0.  In that case, the code will need to step over the
+    rest of <code>List</code> with a decremented <code>Indexes</code> head.  Note that
+    something like <code>Index1 is Index - 1</code> can be used to perform the
+    decrement.
+</p></li></ol></section><section data-level="h4"><h4>Exercise #4: <code>count_non_pairs()</code></h4><p>See the corresponding 
+<a href="../../slides/scheme/scheme.html#umt-slide-78">Scheme</a> example.  Use the <code>\=</code> operator to check that a term is not a pair.
+</p></section><section data-level="h4"><h4>Exercise #5: <code>divisible_by()</code></h4><p>This is an exercise in taking advantage of Prolog's backtracking.
+</p><p>Use a <strong>generate-and-test</strong> strategy, using <code>member/2</code> to generate
+successive elements <code>X</code> of the list which are then tested using simply
+<code>0 is X mod N</code>.
+</p></section><section data-level="h4"><h4>Exercise #6: <code>re_match()</code></h4><p>This exercise also takes advantage of Prolog's backtracking.
+</p><p>Define <code>re_match/2</code> as a wrapper around an auxiliary <code>re_match/3</code>
+where the additional argument should represent the leftover suffix
+after the regex matches a prefix of the input symbols.  For example,
+given a list of input symbols <code>[a, a, a, b, b]</code>, then the symbols
+leftover after matching the regex <code>kleene(a)</code> will be <code>[b, b]</code>.  Since
+<code>re_match/2</code> should match the entire input list of symbols, it will
+call <code>re_match/3</code> with the additional argument set to <code>[]</code>.
+</p><p>Write <code>re_match/3</code> using case-analysis on the structure of the regex:
+</p><ol><li><p>If the regex is a symbol <code>Sym</code> (checked using <code>atomic(Sym)</code>), then
+    the head of the input list must match <code>Sym</code> with the rest of the
+    input list leftover.
+</p></li><li><p>If the regex is <code>concat(Re1, Re2)</code>, then <code>Re1</code> must match a
+    prefix of the input symbols and <code>Re2</code> must match a prefix
+    of the symbols leftover after matching <code>Re1</code>.
+</p></li><li><p>If the regex is <code>alt(Re1, Re2)</code> then either <code>Re1</code> or <code>Re2</code>
+    must match a prefix of the input symbols.  Use separate
+    rules for each alternate.
+</p></li><li><p>If the regex is <code>kleene(Re)</code>, then <code>Re</code> can match successive
+    prefixes of the input symbols repeatedly, or it can simply match
+    the empty prefix of the input symbols.
+</p></li></ol></section><section data-level="h4"><h4>Exercise #7: <code>clausal_form()</code></h4><p>This exercise asks you to convert a Prolog program represented as
+a list of rules into one which uses explicit logical connectives
+(<code>/\</code> for logical-and, <code>\/</code> for logical-or and <code>~</code> for logical
+negation):
+</p><ul><li><p>The input list of rules <code>[Rule1, Rule2, ..., RuleN]</code> represents a
+    logical-and of the rules in the list.  Hence the input list should be
+    converted to <code>RuleZ1 /\ RuleZ2 /\ ... /\ RuleZN</code>, where <code>RuleZ</code><em>i</em>
+    is the conversion of each individual rule.
+</p></li><li><p>A rule which is a fact (there is no body) does not need to change.
+</p></li><li><p>A rule which has a body will match the Prolog term <code>Head :- Body</code>.
+    This will need to be converted into <code>Head \/ BodyZ</code>, where <code>BodyZ</code>
+    is the conversion of <code>Body</code>.
+</p></li><li><p>A <code>Body</code> of the form <code>P1, P2, ..., Pn</code> will need to be converted
+    to <code>~P1 \/ ~P2 \/ ... \/ Pn</code>
+</p></li></ul><p>The conversions for an individual rule follows from the fact
+that <code>:-</code> stands for logical implication and <code>Head :- Body</code> is the
+same as <code>Head \/ ~Body</code>.  Specifically,
+</p>\[     \begin{array}{lll}
+       &amp; \texttt{Head :- P1, P2,}\;\ldots\texttt{, Pn}\\
+     \equiv &amp; \texttt{Head \\/ ~( P1 /\\ P2 /\\} \ldots \texttt{/\\ Pn )}\\
+     \equiv &amp; \texttt{Head \\/ ~P1 \\/ ~P2 \\/}\ldots\texttt{\\/ ~Pn}
+	 &amp; \textrm{using De Morgan's Law}\\	  
+     \end{array}
+\]<p>At first glance, this appears to be a fairly straightforward conversion
+between different operators.  However, there is a problem in that
+the operators have different associativities:
+</p><ul><li><p>The implicit pair operator <code>[|]</code> used with lists is right-associative
+    whereas <code>/\</code> is left-associative.  For example, <code>[Rule1, Rule2, Rule3]</code>
+    has the structure:
+</p><figure id="id-ifwo8bxx50" class="xxx"></figure><script type="module">
+    const data = 
+      { nodes: [ { id: "n-0-0", label: "Rule1", },
+{ id: "n-0-1-0", label: "Rule2", },
+{ id: "n-0-1-1-0", label: "Rule3", },
+{ id: "n-0-1-1-1", label: "[]", },
+{ id: "n-0-1-1", label: "[|]", },
+{ id: "n-0-1", label: "[|]", },
+{ id: "n-0", label: "[|]", } ],
+        edges: [ { from: "n-0", to: "n-0-0", },
+{ from: "n-0", to: "n-0-1", },
+{ from: "n-0-1", to: "n-0-1-0", },
+{ from: "n-0-1", to: "n-0-1-1", },
+{ from: "n-0-1-1", to: "n-0-1-1-0", },
+{ from: "n-0-1-1", to: "n-0-1-1-1", } ],
+      }
+    ;
+    const visData = {
+      nodes: new vis.DataSet(data.nodes),
+      edges: new vis.DataSet(data.edges),
+    };
+    const options = {"nodes":{"shape":"box","widthConstraint":60},"layout":{"hierarchical":{"direction":"UD","sortMethod":"directed","shakeTowards":"roots"}},"height":400};      
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.querySelector('#id-ifwo8bxx50');
+      new vis.Network(container, visData, options);
+    });
+  </script><p>    but the output structure should be:
+</p><figure id="id-1imcqftajui" class="xxx"></figure><script type="module">
+    const data = 
+      { nodes: [ { id: "n-0-0-0", label: "Rule1", },
+{ id: "n-0-0-1", label: "Rule2", },
+{ id: "n-0-0", label: "/\\", },
+{ id: "n-0-1", label: "Rule3", },
+{ id: "n-0", label: "/\\", } ],
+        edges: [ { from: "n-0", to: "n-0-0", },
+{ from: "n-0-0", to: "n-0-0-0", },
+{ from: "n-0-0", to: "n-0-0-1", },
+{ from: "n-0", to: "n-0-1", } ],
+      }
+    ;
+    const visData = {
+      nodes: new vis.DataSet(data.nodes),
+      edges: new vis.DataSet(data.edges),
+    };
+    const options = {"nodes":{"shape":"box","widthConstraint":60},"layout":{"hierarchical":{"direction":"UD","sortMethod":"directed","shakeTowards":"roots"}},"height":400};      
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.querySelector('#id-1imcqftajui');
+      new vis.Network(container, visData, options);
+    });
+  </script></li><li><p>Similarly, the comma operator <code>,</code> used between the predicates of a
+    rule body is right-associative whereas <code>\/</code> is left-associative.
+    Hence <code>Pred1, Pred2, Pred3</code> has the structure
+</p><figure id="id-wnrok7t2s6" class="xxx"></figure><script type="module">
+    const data = 
+      { nodes: [ { id: "n-0-0", label: "Pred1", },
+{ id: "n-0-1-0", label: "Pred2", },
+{ id: "n-0-1-1", label: "Pred3", },
+{ id: "n-0-1", label: ",", },
+{ id: "n-0", label: ",", } ],
+        edges: [ { from: "n-0", to: "n-0-0", },
+{ from: "n-0", to: "n-0-1", },
+{ from: "n-0-1", to: "n-0-1-0", },
+{ from: "n-0-1", to: "n-0-1-1", } ],
+      }
+    ;
+    const visData = {
+      nodes: new vis.DataSet(data.nodes),
+      edges: new vis.DataSet(data.edges),
+    };
+    const options = {"nodes":{"shape":"box","widthConstraint":60},"layout":{"hierarchical":{"direction":"UD","sortMethod":"directed","shakeTowards":"roots"}},"height":400};      
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.querySelector('#id-wnrok7t2s6');
+      new vis.Network(container, visData, options);
+    });
+  </script><p>    but the desired output structure is
+</p><figure id="id-1ny8c8g85ju" class="xxx"></figure><script type="module">
+    const data = 
+      { nodes: [ { id: "n-0-0-0", label: "~Pred1", },
+{ id: "n-0-0-1", label: "~Pred2", },
+{ id: "n-0-0", label: "\\/", },
+{ id: "n-0-1", label: "~Pred3", },
+{ id: "n-0", label: "\\/", } ],
+        edges: [ { from: "n-0", to: "n-0-0", },
+{ from: "n-0-0", to: "n-0-0-0", },
+{ from: "n-0-0", to: "n-0-0-1", },
+{ from: "n-0", to: "n-0-1", } ],
+      }
+    ;
+    const visData = {
+      nodes: new vis.DataSet(data.nodes),
+      edges: new vis.DataSet(data.edges),
+    };
+    const options = {"nodes":{"shape":"box","widthConstraint":60},"layout":{"hierarchical":{"direction":"UD","sortMethod":"directed","shakeTowards":"roots"}},"height":400};      
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.querySelector('#id-1ny8c8g85ju');
+      new vis.Network(container, visData, options);
+    });
+  </script></li></ul><p>The solution to this problem is to accumulate the output using an
+accumulating parameter.  Here is a possible start for the code:
+</p><pre class="hljs language-prolog">clausal_form([Rule|Rules], Form) :- %List of rules specified non-empty
+    rule_clause(Rule, RuleClause),
+    clausal_form(Rules, RuleClause, Form).
+
+clausal_form([], AccForm, AccForm).
+clausal_form([Rule|Rules], AccForm, Form) :-
+    rule_clause(Rule, RuleClause),
+    clausal_form(Rules, AccForm /\ RuleClause, Form).
+</pre><p>where <code>rule_clause(Rule, RuleClause)</code> will convert <code>Rule</code> (in Prolog
+syntax) to <code>RuleClause</code> in logic syntax.
+</p><p>While writing the code, it is important to keep in mind that Prolog's
+<code>:-</code> and <code>,</code> operators have low precedences.  Hence attempting to
+match <code>:-</code> using something like <code>rule_clause(Head:-Body, ...)</code> will
+cause a syntax error; instead you must use something like
+<code>rule_clause((Head:-Body), ...)</code>.  Similar parenthesization is
+necessary when matching the comma operator.
+</p></section></section></section><section data-level="h2"><h2>Submission</h2><p>Before submitting your project, update your README to specify the
+status of your project.  Document any known issues.
+</p><p>Submit using a procedure similar to that used in your previous project.
+</p></section></section></div>
+    </div>
+
+    <script type="module" src="../../assets/scripts/slide-controls.mjs"></script>
+    <script type="module" src="../../assets/scripts/nav.mjs"></script> 
+    <script type="module" src="../../assets/scripts/highlight.mjs"></script>
+</body>
+</html>
+
